@@ -28,17 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $product = new Furniture($sku, $name, $price, $height, $width, $length);
             break;
         default:
-            // Handle invalid product type
             break;
     }
 
 
     if ($product !== null) {
-        // Debugging: Print the product information
         // echo "Product details: ";
         // print_r($product);
-
-        // Save the product only if it's not null
         $product->save($pdo);
         // echo "Product saved successfully!";
         header("location:index.php");

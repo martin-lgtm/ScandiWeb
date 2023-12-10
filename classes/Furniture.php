@@ -42,14 +42,11 @@ class Furniture extends Product {
     }
 
     public function save(PDO $pdo) {
-        // Check SKU uniqueness before saving
         if (!$this->isSkuUnique($pdo)) {
             echo "SKU already exists. Please choose a different SKU.";
-            // Add a die statement to stop execution for debugging
             die;
         }
 
-        // Continue with the save process
         $stmt = $pdo->prepare("INSERT INTO products (sku, product_name, product_price, furniture_height, furniture_width, furniture_length, productType) VALUES (:sku, :product_name, :product_price, :furniture_height, :furniture_width, :furniture_length, :productType)");
         $stmt->execute([
             ':sku' => $this->sku,
@@ -86,7 +83,6 @@ class Furniture extends Product {
             parent::delete($pdo);
             return true;    
         } catch (Exception $e) {
-            // Log the error message
             error_log("Error deleting product: " . $e->getMessage());
             return false;
         }

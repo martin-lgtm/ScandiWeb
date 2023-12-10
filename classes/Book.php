@@ -15,7 +15,6 @@ class Book extends Product
         $this->productType = 'Book';
     }
 
-    // Getter and setter methods for book-specific property
 
     public function getWeight()
     {
@@ -28,14 +27,11 @@ class Book extends Product
     }
 
     public function save(PDO $pdo) {
-        // Check SKU uniqueness before saving
         if (!$this->isSkuUnique($pdo)) {
             echo "SKU already exists. Please choose a different SKU.";
-            // Add a die statement to stop execution for debugging
             die;
         }
 
-        // Continue with the save process
         $stmt = $pdo->prepare("INSERT INTO products (sku, product_name, product_price, book_weight, productType) VALUES (:sku, :product_name, :product_price, :book_weight, :productType)");
         $stmt->execute([
             ':sku' => $this->sku,
@@ -72,7 +68,6 @@ class Book extends Product
             parent::delete($pdo);
             return true;    
         } catch (Exception $e) {
-            // Log the error message
             error_log("Error deleting product: " . $e->getMessage());
             return false;
         }
