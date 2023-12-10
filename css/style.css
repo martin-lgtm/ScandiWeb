@@ -1,0 +1,22 @@
+.line {
+  border-top: 1px solid #000;
+  margin-top: 20px;
+  width: 66% !important;
+  margin-left: 15%;
+}
+
+footer {
+  position: absolute;
+  bottom: 10;
+  color: #ffffff;
+  padding: 15px;
+}
+
+p {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
+}
+
+.label-margin {
+  margin-right: 15px;
+}/*# sourceMappingURL=style.css.map */
