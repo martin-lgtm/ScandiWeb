@@ -58,7 +58,8 @@ class Furniture extends Product {
             ':productType' => $this->productType,
         ]);
 
-        echo "Product saved successfully!";
+        header("location:index.php");
+        
     }
     
 

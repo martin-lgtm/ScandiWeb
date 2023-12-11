@@ -148,60 +148,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"]) && $_POST["
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $(".delete-product-btn").on("click", function(e) {
-                e.preventDefault();
+     $(document).ready(function() {
+    $(".delete-product-btn").on("click", function(e) {
+        e.preventDefault();
 
-                var selectedProducts = $(".delete-checkbox:checked");
-                var skusToDelete = selectedProducts.map(function() {
-                    return $(this).data("sku");
-                }).get();
+        var selectedProducts = $(".delete-checkbox:checked");
+        var skusToDelete = selectedProducts.map(function() {
+            return $(this).data("sku");
+        }).get();
 
-                if (skusToDelete.length === 0) {
-                    return;
+        if (skusToDelete.length === 0) {
+            return;
+        }
+
+        $.ajax({
+            url: window.location.href,
+            method: "POST",
+            data: {
+                action: "deleteProducts",
+                products: skusToDelete
+            },
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+
+                if (response.status === "success") {
+                    // Reload the page after a successful AJAX request
+                    window.location.reload();
+                } else {
+                    console.log("Unexpected response:", response);
                 }
-
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: window.location.href,
-                            method: "POST",
-                            data: {
-                                action: "deleteProducts",
-                                products: skusToDelete
-                            },
-                            dataType: "json",
-                            success: function(response) {
-                                console.log(response);
-
-                                if (response.status === "success") {
-
-                                    location.reload(true);
-                                    selectedProducts.each(function() {
-                                        $(this).closest(".product-card").remove();
-                                    });
-
-
-                                } else {
-                                    console.log("Unexpected response:", response);
-                                }
-                            },
-                            error: function() {
-                                console.log("Error in AJAX request");
-                            }
-                        });
-                    }
-                });
-            });
+            },
+            error: function() {
+                console.log("Error in AJAX request");
+            }
         });
+    });
+});
     </script>
 </body>
 
